@@ -46,8 +46,8 @@ account cost "Project Cost" {
   account manag "Management"
   account wFront "Web Front-End"
   account back "Back-End"
-  account frontendmvl "Frontend Movil"
-  account despCloud "Despligue Nube"
+  account frontmvl "Frontend Movil"
+  account desp "Despligue Nube"
 
 }
 account rev "Payments"
@@ -102,7 +102,7 @@ task WMGame "Web & Mobile Game" {
   task frontendmvl "Frontend Movil"{
     # It is necessary to “purge” the “chargeset” because it has been assigned previously to other variable 
     purge chargeset
-    chargeset back
+    chargeset frontmvl
     responsible boss
     depends WMGame.tgdesign
 
@@ -138,7 +138,7 @@ task WMGame "Web & Mobile Game" {
     task despCloud "Despligue Nube"{
     # It is necessary to “purge” the “chargeset” because it has been assigned previously to other variable 
       purge chargeset
-      chargeset back
+      chargeset desp
       responsible dev3
       depends WMGame.tgdesign
       task eval "Evaluar adecuada"{
