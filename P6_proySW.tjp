@@ -95,9 +95,9 @@ task WMGame "Web & Mobile Game" {
   task tgdesign "General System Design" {
       effort 2d
       allocate boss
- #     depends WMGame.deliveries.start
+      depends WMGame.deliveries.start
   }
-}
+
 
   task frontendmvl "Frontend Movil"{
     # It is necessary to “purge” the “chargeset” because it has been assigned previously to other variable 
@@ -273,6 +273,7 @@ task WMGame "Web & Mobile Game" {
       charge 12000.0 onstart
     }
   }
+}
 }
 
 # Now the project has been specified completely. Stopping here would
