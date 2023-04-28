@@ -72,7 +72,7 @@ resource dev3 "Peter Green" {
 }
 resource dev4 "Ismael Martinez"{
   email "818903@unizar.es"
-  rate: 200
+  rate 200
   limits { dailymax 4h }
 }
 
