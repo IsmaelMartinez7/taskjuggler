@@ -134,6 +134,7 @@ task WMGame "Web & Mobile Game" {
         summary "The whole team asiigned to this task has a trip to visit a new client from May 7th to May 12th. Needed to check if the project can be finished on time or it is necessary to reasign efforts."
       } 
     }
+  }
 
     task despCloud "Despligue Nube"{
     # It is necessary to “purge” the “chargeset” because it has been assigned previously to other variable 
@@ -156,6 +157,7 @@ task WMGame "Web & Mobile Game" {
           author dev3 
           alert green
           summary "El equipo ha completado la tarea antes del tiempo previsto."
+        }
       }
 
       task DesEntorno "Desplegar entorno"{
@@ -175,7 +177,6 @@ task WMGame "Web & Mobile Game" {
       }
     }
 
-  }
   task tback "Back End" {
     # It is necessary to “purge” the “chargeset” because it has been assigned previously to other variable 
     purge chargeset
@@ -274,7 +275,7 @@ task WMGame "Web & Mobile Game" {
     }
   }
 }
-}
+
 
 # Now the project has been specified completely. Stopping here would
 # result in a valid TaskJuggler file that could be processed and
