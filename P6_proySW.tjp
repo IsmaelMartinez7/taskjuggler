@@ -345,6 +345,11 @@ textreport frame "" {
     title "Resource Graph"
     center '<[report id="resourceGraph"]>'
   }
+  textreport "resourceInicial" {
+    formats html
+    title "Resource Initial"
+    center '<[report id="resourceInicial"]>'
+  }
 }
 
 # A traditional Gantt chart with a project overview.
@@ -438,6 +443,18 @@ resourcereport contactList "" {
 # resource is under- or over-allocated for.
 resourcereport resourceGraph "" {
   scenarios actual
+  headline "Current Resource Allocation Graph"
+  columns no, name, effort, rate, weekly { ${TaskTip} }
+  loadunit shortauto
+  # We only like to show leaf tasks for leaf resources.
+  hidetask ~(isleaf() & isleaf_())
+  sorttasks plan.start.up
+}
+
+# A graph showing resource allocation. It identifies whether each
+# resource is under- or over-allocated for.
+resourcereport resourceInicial "" {
+  scenarios plan
   headline "Current Resource Allocation Graph"
   columns no, name, effort, rate, weekly { ${TaskTip} }
   loadunit shortauto
