@@ -5,7 +5,7 @@
  * some elements of it
  */
 
-project pSix "Web Game"  2023-03-15 +2.5m {
+project pSix "Web Game"  2023-04-28 +2.5m {
   # Set the default time zone for the project. If not specified, UTC
   # is used.
   timezone "Europe/Paris"
@@ -19,7 +19,7 @@ project pSix "Web Game"  2023-03-15 +2.5m {
   # the project reports. If not specified, the current day will be
   # used, but this will likely be outside of the project range, so it
   # can't be seen in the reports.
-  now 2023-04-15-13:00
+  now 2023-04-28-15:23
   # The currency for all money values is the US Dollar.
   currency "EUR"
 
@@ -46,6 +46,9 @@ account cost "Project Cost" {
   account manag "Management"
   account wFront "Web Front-End"
   account back "Back-End"
+  account frontendmvl "Frontend Movil"
+  account despCloud "Despligue Nube"
+
 }
 account rev "Payments"
 # The Profit&Loss analysis should be rev - cost accounts.
@@ -66,6 +69,11 @@ resource dev2 "Samantha Müller" {
 }
 resource dev3 "Peter Green" {
   email "kkk@unizar.es"
+}
+resource dev4 "Ismael Martinez"{
+  email "818903@unizar.es"
+  rate: 100
+  limits { dailymax 4h }
 }
 
 # Now we specify the work packages. The whole project is described as
@@ -89,7 +97,85 @@ task WMGame "Web & Mobile Game" {
       allocate boss
       depends WMGame.deliveries.start
   }
+}
 
+  task frontendmvl "Frontend Movil"{
+    # It is necessary to “purge” the “chargeset” because it has been assigned previously to other variable 
+    purge chargeset
+    chargeset back
+    responsible boss
+    depends WMGame.tgdesign
+
+    task disen "Disenyo interface"{
+      # The effort to finish this task is 3 man-days.
+      effort 3d
+      allocate dev4
+    }
+
+    #Conectar Backend con frontend
+    task conectarback "Conectar Backend"{
+    # The effort to finish this task is 12 man-days.
+      effort 12d
+      actual:effort 11d
+      allocate dev1, dev2, dev4
+      depends WMGame.tback
+      depends WMGame.frontendmvl.disen
+    }
+
+    task test "Testeo"{
+    # The effort to finish this task is 7 man-days.
+      effort 7d
+      actual:effort 8d
+      allocate dev1, dev2
+      depends WMGame.frontendmvl.conectarback
+      journalentry 2023-06-24 "Problems with the planned dates" {
+        author boss
+        alert red
+        summary "The whole team asiigned to this task has a trip to visit a new client from May 7th to May 12th. Needed to check if the project can be finished on time or it is necessary to reasign efforts."
+      } 
+    }
+
+    task despCloud "Despligue Nube"{
+    # It is necessary to “purge” the “chargeset” because it has been assigned previously to other variable 
+      purge chargeset
+      chargeset back
+      responsible dev3
+      depends WMGame.tgdesign
+      task eval "Evaluar adecuada"{
+        effort 3d
+        actual:effort 4d
+        allocate boss
+      }
+
+      task config "Configurar Entorno"{
+        effort 12d
+        actual:effort 11d
+        allocate dev3
+        depends WMGame.despCloud.eval
+        journalentry 2023-05-15 "La configuracion del entorno ha sido completado antes de la fecha de entrega" {
+          author dev3, dev4
+          alert green
+          summary "El equipo ha completado la tarea antes del tiempo previsto."
+      }
+
+      task DesEntorno "Desplegar entorno"{
+        effort 7d
+        allocate dev3
+        depends WMGame.despCloud.config
+        journalentry 2023-05-23 "La herramienta de despligue ha ocasionado algunos problemas" {
+          author dev3
+          alert yellow
+          summary "El dev3 ha tenido problemas a la hora de usar la herramienta de despligue"
+        }
+      }
+      task testing "Pruebas despligue"{
+        effort 5d
+        allocate dev4
+        depends WMGame.despCloud.DesEntorno
+      }
+    }
+
+  }
   task tback "Back End" {
     # It is necessary to “purge” the “chargeset” because it has been assigned previously to other variable 
     purge chargeset
@@ -104,9 +190,9 @@ task WMGame "Web & Mobile Game" {
     task tlogic "Game logic" {
       effort 12d
       actual:effort 11d
-      allocate dev1, dev2
+      allocate dev1, dev2, dev4
       depends WMGame.tback.tBEd
-      journalentry 2023-03-28 "Game logic completed before deadline" {
+      journalentry 2023-05-16 "Game logic completed before deadline" {
         author boss
         alert green
         summary "The team has ended the game logic before deadline."
@@ -114,7 +200,7 @@ task WMGame "Web & Mobile Game" {
     }
     task tbackDev "Back development" {
       effort 20d
-      allocate dev1, dev2
+      allocate dev4, dev2
       depends WMGame.tback.tlogic
     }
   }
@@ -128,7 +214,7 @@ task WMGame "Web & Mobile Game" {
       effort 9d
       actual:effort 15d
       allocate dev3
-      journalentry 2023-04-11 "Problems with the GUI design tool" {
+      journalentry 2023-05-20 "Problems with the GUI design tool" {
         author dev3
         alert yellow
         summary "The tool used for the GUI design has given me a lot of problems. I recommend to look for other one."
@@ -141,17 +227,18 @@ task WMGame "Web & Mobile Game" {
     }
     task tFEt "Web Front End Test" {
       effort 6d
-      allocate dev1
+      allocate dev1, dev4
       depends WMGame.twebF.tFEc
     }    
   }
 
   task ttest "Accpetance tests" {
+      start 2023-06-01
       effort 10d
       allocate boss
       allocate dev2
       actual:effort 15d
-      journalentry 2023-04-13 "Problems with the planned dates" {
+      journalentry 2023-06-16 "Problems with the planned dates" {
         author boss
         alert red
         summary "The whole team asiigned to this task has a trip to visit a new client from May 7th to May 12th. Needed to check if the project can be finished on time or it is necessary to reasign efforts."
