@@ -1,4 +1,4 @@
-/*
+/*Actual
  * This file contains the practice 6 source code corresponding with the 
  * project planification using TaskJuggler in the "Proyecto Software" course.
  * It is based on the Tutorial project offered by TaskJuggler and maintains 
@@ -46,6 +46,7 @@ account cost "Project Cost" {
   account manag "Management"
   account wFront "Web Front-End"
   account back "Back-End"
+  account deliveries "Milestones"
   account frontendmvl "Frontend Movil"
   account despCloud "Despligue Nube"
 
