@@ -150,10 +150,10 @@ task WMGame "Web & Mobile Game" {
       task config "Configurar Entorno"{
         effort 12d
         actual:effort 11d
-        allocate dev3
+        allocate dev3, dev4
         depends WMGame.despCloud.eval
         journalentry 2023-05-15 "La configuracion del entorno ha sido completado antes de la fecha de entrega" {
-          author dev3, dev4
+          author dev3 
           alert green
           summary "El equipo ha completado la tarea antes del tiempo previsto."
       }
